@@ -265,7 +265,7 @@ function getFeedBack(x,y,color){
                         }
                    })
     console.log("y_ai,x_ai,color_ai:",y_ai,x_ai,color_ai)
-    play(y_ai,x_ai,color_ai);
+    play(18-y_ai,x_ai,color_ai);
     drawAi();
 }
 
