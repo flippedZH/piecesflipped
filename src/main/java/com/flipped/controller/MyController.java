@@ -52,14 +52,17 @@ public class MyController {
         lastMsg  = GetDemo.getRes();
         String msg = JSON.toJSONString(pie);
         ClientModel clientModel=new ClientModel();
-        clientModel.doExchange(socket, msg);
-        while (true){
-            String res = GetDemo.getRes();
-            if(res!=null&&!res.equals(lastMsg)){
-                System.out.println("到前端："+ res);
-                return JSON.toJSONString(res);//返回java对象与json对象都可以 ，@ResponseBody自动将其转换为jsoN对象
+        if(socket!=null){
+            clientModel.doExchange(socket, msg);
+            while (true){
+                String res = GetDemo.getRes();
+                if(res!=null&&!res.equals(lastMsg)){
+                    System.out.println("到前端："+ res);
+                    return JSON.toJSONString(res);//返回java对象与json对象都可以 ，@ResponseBody自动将其转换为jsoN对象
+                }
             }
-        }
+        }else
+            return "";
     }
 
     @ResponseBody

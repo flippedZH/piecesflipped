@@ -3,21 +3,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>围棋</title>
+    <title>Go</title>
     <link rel="stylesheet" href="/css/go.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-    <script src="/js/go.js"></script>
-    <script src="/js/core.js"></script>
+    <script src="/js/go.js" ></script>
+    <script src="/js/core.js" ></script>
     <script src="/js/index.js"></script>
-    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/jquery-3.4.1.min.js" ></script>
+    <script src="/js/bootstrap.min.js" ></script>
+    <script src="/js/bootstrap.js"  type="application/javascript"></script>
 
     <div style="display:none;"><img id="bg" src="/images/bg.jpg"></div>
 
 </head>
 
 <body class="deleteBlue">
-<a href="/test">test</a>
+
+<div class="container-fluid ">
+    <div class="row" style="background: white;height: 40px">
+        <div class="col-md-6" style="background: #2aabd2;height: 40px" ></div>
+        <div class="col-md-6" style="height: 40px;top:10px" >
+
+            <div th:if="${session.user!=null}">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span th:text="${session.user.name}"></span>
+                <span >&nbsp&nbsp&nbsp退出登录</span>
+            </div>
+
+            <div th:if="${session.user==null}">
+                <a href="https://github.com/login/oauth/authorize?client_id=7dbe1c660c6f1f9492d7&redirect_uri=http://localhost:8080/redirect&scope=user&state=1">
+                    <button id="btn-login" type="button" style="width: 50px">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    </button>
+                    <span >登录</span>
+                </a>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
 <div class="container-fluid ">
     <div class="row" style="background: red;height: 600px">
         <!--棋盘与棋盘线-->
@@ -34,12 +63,15 @@
                     <button id="showNum" type="button" class="btn btn-primary" style="top:200px" onclick="showNum()">
                         显示手数
                     </button>
-                    <button id="clearBoard" type="button" class="btn btn-warning" style="top:250px"
+                    <button id="save" type="button" class="btn btn-primary" style="top:250px">
+                        保存棋谱
+                    </button>
+                    <button id="clearBoard" type="button" class="btn btn-warning" style="top:300px"
                             onclick="clearBoard()">清空棋盘
                     </button>
                 </div>
 
-                <div class="col-md-12" style="background:green;top: 300px;">
+                <div class="col-md-12" style="background:green;top: 350px;">
                     <div>
                         <table class="table table-condensed" style="width: 100px">
                             <tr>

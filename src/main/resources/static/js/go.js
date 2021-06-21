@@ -6,6 +6,11 @@ function toZero() {
     }
 }
 
+$(document).on("click", "#btn-login", function () {
+
+});
+
+
 function showNum(){
     if(move_show_flag==false){
         move_show_flag=true;

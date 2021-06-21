@@ -87,7 +87,7 @@ function show_number(cxt){
 function draw() {
     var cxt =initDraw();
     $.ajax({
-                  async:false,
+                /*  async:false ,*/
                   url: "test_post",
                   type: "POST",
                   dataType: "json",
