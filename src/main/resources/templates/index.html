@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>围棋</title>
+    <link rel="stylesheet" href="/css/go.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <script src="/js/go.js"></script>
+    <script src="/js/core.js"></script>
+    <script src="/js/index.js"></script>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+
+    <div style="display:none;"><img id="bg" src="/images/bg.jpg"></div>
+
+</head>
+
+<body class="deleteBlue">
+<a href="/test">test</a>
+<div class="container-fluid ">
+    <div class="row" style="background: red;height: 600px">
+        <!--棋盘与棋盘线-->
+        <div class="col-md-6">
+            <canvas id="goBoard" class="board_and_path" width="500" height="500" ></canvas>
+            <canvas id="path" class="board_and_path" width="500" height="500"></canvas>
+        </div>
+        <div class="col-md-6 ">
+            <div class="row" style="background: darksalmon;height: 600px">
+
+                <div class="col-md-12 " style="background: #0f0f0f">
+                    <button id="ai" type="button" class="btn btn-primary" style="top:100px" >AI对弈</button>
+                    <button id="capture" type="button" class="btn btn-primary" style="top:150px">拍照</button>
+                    <button id="showNum" type="button" class="btn btn-primary" style="top:200px" onclick="showNum()">
+                        显示手数
+                    </button>
+                    <button id="clearBoard" type="button" class="btn btn-warning" style="top:250px"
+                            onclick="clearBoard()">清空棋盘
+                    </button>
+                </div>
+
+                <div class="col-md-12" style="background:green;top: 300px;">
+                    <div>
+                        <table class="table table-condensed" style="width: 100px">
+                            <tr>
+                                <th>提白子</th>
+                                <td id="blackUp"></td>
+                            </tr>
+                            <tr>
+                                <th>提黑子</th>
+                                <td id="whiteUp">$100</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    >
+</div>
+
+
+<script>
+    // $:jquery
+    $(function () {
+        img = document.getElementById("bg");
+        draw();
+
+        $(document).on("click", "#capture", function () {
+            toZero()
+            draw();
+
+        });
+
+        $(document).on("click", "#ai", function () {
+            $.ajax({
+                type:"get",
+                contentType: "application/json;charset=UTF-8",
+                url:"/ai",
+            })
+        });
+    })
+</script>
+
+</body>
+</html>
