@@ -2,19 +2,24 @@ package com.flipped.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.flipped.dto.Pie;
+import com.flipped.mapper.UserMapper;
 import com.flipped.model.AsyncThread;
 
+import com.flipped.pojo.User;
 import com.flipped.utils.ClientModel;
 import com.flipped.utils.GetDemo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.*;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Timer;
-import java.util.TimerTask;
+
 /**
  * 问题：
  * 消息阻塞：并非阻塞 ，由于线程执行顺序的问题
@@ -31,15 +36,42 @@ import java.util.TimerTask;
  */
 
 @Controller
-public class MyController {
+public class IndexController {
     private Socket socket;
     private String lastMsg;
 
     @Autowired
     AsyncThread asyncThread;
+    @Autowired
+    private  UserMapper userMapper;
+
+
+    @Value("${url.github.authorize}")
+    private String githubUrl;
+    @Value("${url.gitee.authorize}")
+    private String giteeUrl;
+    @Value("${url.sina.authorize}")
+    private String sinaUrl;
 
     @RequestMapping("/")
-    public  String homepage() {
+    public  String homepage(Model model,
+                            HttpServletRequest request) {
+        model.addAttribute("githubUrl",githubUrl);
+        model.addAttribute("giteeUrl",giteeUrl);
+        model.addAttribute("sinaUrl",sinaUrl);
+        //请求中携带了cookie 我的视角是服务器
+        Cookie[] cookies = request.getCookies();
+        for(Cookie cookie :cookies){
+            if(cookie.getName().equals("token")){
+                String token=cookie.getValue();
+                User user=userMapper.findUserByToken(token);
+                if(user!=null){
+                    request.getSession().setAttribute("user",user);
+                }else{
+                    break;
+                }
+            }
+        }
         return "index";
     }
 
@@ -82,5 +114,7 @@ public class MyController {
     public  String test() {
         return "index_test";
     }
+
+
 }
 

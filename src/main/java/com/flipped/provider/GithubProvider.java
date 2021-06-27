@@ -1,8 +1,8 @@
 package com.flipped.provider;
 
 import com.alibaba.fastjson.JSONObject;
-import com.flipped.dto.GithubUser;
 import com.flipped.dto.IdentityParamDto;
+import com.flipped.dto.JsonUser;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +43,7 @@ public class GithubProvider {
             return null;
     }
 
-    public GithubUser getGithubUser(String token){
+    public JsonUser getGithubUser(String token){
         //get请求（携带token） 获取 用户信息
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -53,7 +53,7 @@ public class GithubProvider {
             try (Response response = client.newCall(request).execute()) {
                 String res= response.body().string();
                 System.out.println("res:"+res);
-                GithubUser githubUser=JSONObject.parseObject(res,GithubUser.class);
+                JsonUser githubUser=JSONObject.parseObject(res,JsonUser.class);
                 System.out.println("githubUser："+githubUser);
                 return githubUser;
             }catch (IOException e){

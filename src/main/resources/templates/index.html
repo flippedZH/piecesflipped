@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/css/go.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+
     <script src="/js/go.js" ></script>
     <script src="/js/core.js" ></script>
     <script src="/js/index.js"></script>
@@ -17,45 +19,51 @@
     <div style="display:none;"><img id="bg" src="/images/bg.jpg"></div>
 
 </head>
-
 <body class="deleteBlue">
-
 <div class="container-fluid ">
     <div class="row" style="background: white;height: 40px">
         <div class="col-md-6" style="background: #2aabd2;height: 40px" ></div>
-        <div class="col-md-6" style="height: 40px;top:10px" >
+        <div class="col-md-6" style="height: 40px;top:3px" >
 
-            <div th:if="${session.user!=null}">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            <div th:if="${session.user!=null}" style="top: 5px;position: absolute">
+                <span >
+                    <img  class="img-avatar" th:src="${session.user.avatarUrl}">
+                </span>
                 <span th:text="${session.user.name}"></span>
-                <span >&nbsp&nbsp&nbsp退出登录</span>
-            </div>
-
-            <div th:if="${session.user==null}">
-                <a href="https://github.com/login/oauth/authorize?client_id=7dbe1c660c6f1f9492d7&redirect_uri=http://localhost:8080/redirect&scope=user&state=1">
-                    <button id="btn-login" type="button" style="width: 50px">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    </button>
-                    <span >登录</span>
+                <a href="/logout">
+                    <span >退出登录</span>
                 </a>
             </div>
 
-
+            <div th:if="${session.user==null}">
+                <span >登录&nbsp&nbsp&nbsp</span>
+                <!--github登陆-->
+                <a th:href="${githubUrl}">
+                    <span class="fa fa-github" style="font-size: 30px">&nbsp&nbsp&nbsp</span>
+                </a>
+                <!--码云登陆-->
+                <a href="https://gitee.com/oauth/authorize?client_id=b2701d72652b277dd3426c5bd9007fb5ed9bf31244621d60eaa3ff178b41553a&redirect_uri=http://localhost:8080/loginByGitee&response_type=code&scope=user_info">
+                    <span><img src="/images/gitee.jpg" class="img-gitee"></span>
+                </a>
+                <!--微博登陆-->
+                <a th:href="${sinaUrl}">
+                    <span class="fa fa-weibo" style="font-size: 30px;position: absolute;left: 155px" ></span>
+                </a>
+            </div>
         </div>
 
     </div>
 </div>
 
-
 <div class="container-fluid ">
-    <div class="row" style="background: red;height: 600px">
+    <div class="row" style="height: 540px">
         <!--棋盘与棋盘线-->
         <div class="col-md-6">
             <canvas id="goBoard" class="board_and_path" width="500" height="500" ></canvas>
             <canvas id="path" class="board_and_path" width="500" height="500"></canvas>
         </div>
         <div class="col-md-6 ">
-            <div class="row" style="background: darksalmon;height: 600px">
+            <div class="row" style="background: darksalmon;height: 540px">
 
                 <div class="col-md-12 " style="background: #0f0f0f">
                     <button id="ai" type="button" class="btn btn-primary" style="top:100px" >AI对弈</button>
